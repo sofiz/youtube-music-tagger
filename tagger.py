@@ -13,6 +13,7 @@ for entry in os.listdir(basepath):
    entry_artist =  re.sub(r'|'.join(map(re.escape, blacklist)), '', entry_artist)
    print ("artist 1 : ", entry_artist)
    entry_title = entry.partition("-")[2]
+   artist = ""
    if "ft. " in entry_title :
        artist = entry_title.partition("ft. ")[2]
        artist =  re.sub(r'|'.join(map(re.escape, blacklist)), '', artist)
@@ -28,5 +29,8 @@ for entry in os.listdir(basepath):
        audiofile.artist = (entry_artist + " / " + artist)
        audiofile.song = (entry_title)
        audiofile.save()
-       if (rename=="Y") or (rename=="y"):
+       try :
+        if (rename=="Y") or (rename=="y"):
            os.rename ( p + entry , p + entry_name + ".mp3")
+       except :
+           continue
